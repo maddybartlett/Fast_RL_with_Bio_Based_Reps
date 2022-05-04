@@ -1,0 +1,28 @@
+searchSpace:
+   alpha:
+      _type: uniform
+      _value: [0.0, 1.0]
+   beta:
+      _type: uniform
+      _value: [0.0, 1.0]
+   gamma:
+      _type: uniform
+      _value: [0.0, 1.0]
+   neurons: 
+      _type: randint
+      _value: [100, 5000] 
+   sparsity:
+      _type: uniform
+      _value: [0.0, 1.0]
+      
+experimentName: EXPERIMENT
+trialCommand: python exp_MGTD01H_long.py
+trialConcurrency: 2
+maxTrialNumber: 8000
+maxExperimentDuration: 12h
+tuner:
+   name: Anneal
+   classArgs:
+      optimize_mode: minimize
+trainingService:
+   platform: local
