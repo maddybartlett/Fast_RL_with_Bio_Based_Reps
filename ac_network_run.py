@@ -27,7 +27,7 @@ def main(args):
                                  sparsity = args['sparsity'], 
                                  dims = args['dims'],
                                  verbose = False, 
-                                 trials = 200,
+                                 trials = 500,
                                 data_dir = args['data_dir'])
 
     ep_results.append(out["episodes"])
