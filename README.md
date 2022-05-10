@@ -69,6 +69,34 @@ where:
 
 ### Data Preprocessing:
 
+Before running the analysis you will need to run a pre-processing script on the data in order to convert it from text files into pandas dataframes. You can do this either from the command line or in a Jupyter notebook.
+
+The relevant scripts for this contain two main functions. 
+The *txt_to_dataFrame* function will retrieve the text files saved by the NNI experiments and convert them to pandas data frames. 
+Then the *add_roll_mean* function will add a column to the data frame that contains the rolling average reward gained for each run (the average reward over each 100 learning trials). 
+
+#### Command Line:
+
+To run the pre-processing from the command line, simply run:
+
+'''
+python preprocess_data.py
+'''
+
+You will be prompted to enter the path to the relevant data folder.
+
+#### Notebook: 
+
+Alternatively, you can step through the pre-process by running Preprocess_Data.ipynb from a Jupyter notebook. 
+
+You will need to manually set the destination folder where you would like the data to be saved in cell 4:
+
+'''python
+folder = '.\\data\\main_experiment'
+'''
+
+### Analysis:
+
 #### Command Line:
 
 #### Notebook: 
