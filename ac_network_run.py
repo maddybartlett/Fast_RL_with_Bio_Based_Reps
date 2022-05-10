@@ -47,37 +47,22 @@ def main(args):
     plt.savefig(args['data_dir']+"/ep_rewards.pdf")
                                        
 if __name__ == '__main__':
-    representation = input("1H, SSP or Grid representation? ")
-    while not (representation == '1H' or representation == 'SSP' or representation == 'Grid'):
-        print('ValueError: Value entered is not a valid representation method. Must be either 1H, SSP or Grid.')
-        representation = input("1H, SSP or Grid representation? ")
-        
-    rule = input("TD0 or TDLambda? ")
-    while not (rule == 'TD0' or rule == 'TDLambda'):
-        print('ValueError: Value entered is not a valid rule. Must be either TD0 or TDLambda.')
-        rule = input("TD0 or TDLambda? ")
-        
-    alpha = float(input("Enter value for learning rate: "))
-    beta = float(input("Enter value for action value discount: "))
-    gamma = float(input("Enter value for state value discount: "))
-    
-    neurons = int(input("Enter number of neurons: "))
-    sparsity = float(input("Enter value for sparsity: "))
-    
     directory = input("Enter path for saving the data? ") 
     while not os.path.exists(directory):
         print("Path of the file is Invalid")
         directory = input("Enter path for saving the data? ")
+        
+    representation = "SSP"        
+    rule = "TDLambda"
+        
+    alpha = 0.64539
+    beta = 0.655092
+    gamma = 0.832537
+    lambd = 0.828999
     
-    if rule == 'TDLambda':
-        lambd = float(input("Enter value for eligibility trace discount (lambda): "))
-    else:
-        lambd = None
-    
-    if representation == 'SSP':
-        dims = int(input("Enter value for dimensionality of SSP representation: "))
-    else:
-        dims = 1
+    neurons = 4427
+    sparsity = 0.552192
+    dims = 256
     
     params = {'rep':representation, 'rule': rule, 'alpha':alpha,
              'beta': beta, 'gamma':gamma, 'lambda': lambd, 'neurons':neurons,
