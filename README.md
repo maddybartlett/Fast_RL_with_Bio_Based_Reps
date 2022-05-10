@@ -79,9 +79,9 @@ Then the *add_roll_mean* function will add a column to the data frame that conta
 
 To run the pre-processing from the command line, simply run:
 
-'''
+```
 python preprocess_data.py
-'''
+```
 
 You will be prompted to enter the path to the relevant data folder.
 
@@ -91,12 +91,70 @@ Alternatively, you can step through the pre-process by running Preprocess_Data.i
 
 You will need to manually set the destination folder where you would like the data to be saved in cell 4:
 
-'''python
+```python
 folder = '.\\data\\main_experiment'
-'''
+```
 
 ### Analysis:
 
+There are two analysis scripts. One that can be run from the command line, and one that is a Jupyter notebook. 
+
 #### Command Line:
 
+The analysis_main.py script can be run from the command line in order to produce pdf's of the figures presented in Bartlett, Stewart & Orchard (2022). 
+
+```
+python analysis_main.py
+```
+
+You will be prompted to provide the path to the folder containing your pandas data frames. 
+The script will then create plots of:
+
+*  the optimization curves for each NNI experiment
+*  the number of trials it took to reach the goal rolling mean of 0.95 for the top 2% of parameter combinations
+
+These plots will then be saved in a new "figures" folder. 
+
 #### Notebook: 
+
+To get a more detailed look at the results from the NNI experiments we recommend you run the Jupyter notebook script Analysis_Main.ipynb. 
+
+First you will need to enter the path to the folder containing the pandas data frames with your data from the NNI experiments in cell 6:
+
+```python
+data_folder = Path('./data/')
+```
+
+The notebook is then split into 3 main parts. 
+The first 2 sections divide the analysis between the two learning rules TD(0) and TD($\lambda$).
+
+For each of these sections, the first step is to calculate, for each run, the number of trials that were needed to reach the goal rolling mean reward of 0.95. 
+This data gets added to each dataframe in a new column named 'goal_reached'. 
+Once this is done, and the data contained in the data frames is converted to numeric (where applicable), plots of the optimization curves for each NNI experiment are produced. 
+For each learning rule, a total of 4 optimization plots are provided, one for each method of representing the state (baseline, one hot, SSPs and grid cells). 
+We also print the minimum number of trials that were needed to reach the goal, which gives an idea of what the best combination of parameter values was able to achieve. 
+
+We then take a closer look at the 'best' parameter combinations. 
+First we figure out what the top 2% of runs were by getting those runs that reached the goal rolling mean in the fewest number of trials. 
+For each representation method we print out the parameter values for this top 2%, and then produce a table showing the minimum and maximum value for each parameter within this top 2%. 
+This table gives an idea of the stability of the values identified as being 'best' -- smaller ranges would indicate that the NNI experiment did identify a region of the parameter space that worked well, rather than just getting lucky a bunch of times. 
+
+In order to further explore the stability of these values, we then get all of the NNI runs whose parameter values all fell within these ranges. 
+Plotting the number of trials to reach goal for all of these NNI runs that used these 'best' parameter combinations illustrates whether using values within these ranges reliably produced good performance. 
+
+Finally, for the best 2% of experiments, we plot the reward schedule across all learning trials in each run to make sure that once the goal rolling reward was reached, the network was able to maintain this good performance. 
+
+The final section in this notebook provides the combined plots presented in the published paper. Namely, the optimization plots for all 8 experiments, and the trials-to-goal plots for the best 2% of runs in all 8 experiments. 
+
+## Citation:
+
+Please use this bibtex to reference the paper: 
+
+<pre>
+<!-- @inproceedings{bartlett2022_RLNNI,
+  author = {Bartlett, Madeleine and Stewart, Terrence C and Orchard, Jeff},
+  title = {Fast Online Reinforcement Learning with Biologically-Based State Representations},
+  year = {2022},
+  booktitle={},
+ } -->
+</pre>
