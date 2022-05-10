@@ -49,7 +49,8 @@ nnictl --config config_MGTD0Baseline_long.yml
 This will start the NNI parameter search experiment which will run for 12 hours. <br>
 Once the experiment starts running, a localhost url will be provided in the terminal which you can go to in order to monitor the progress of the experiment. 
 
-** Important: you must change the data_dir in each "exp..." file before running these NNI experiments. Change to a unique data directory where you would like the data from the experiment to be saved. ** We recommend using the following format for naming the data_dir: 
+**Important: you must change the data_dir in each "exp..." file before running these NNI experiments. Change to a unique data directory where you would like the data from the experiment to be saved.** 
+We recommend using the following format for naming the data_dir: 
 
 Path('../DATA_FOLDER/'TASK_RULE_REP), 
 
