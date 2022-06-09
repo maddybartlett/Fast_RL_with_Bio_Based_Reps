@@ -255,15 +255,15 @@ param_sets_ssp = mg_0_ssp_best[['index', 'alpha ', 'beta ', 'gamma ', 'n_neurons
 param_sets_grid = mg_0_grid_best[['index', 'alpha ', 'beta ', 'gamma ', 'n_neurons ', 'sparsity ', 'goal_reached']]
 
 ## TD(lambda)
-mg_lam_base_best = get_best(mg_lam_base, ['alpha ', 'beta ', 'gamma '])
-mg_lam_1h_best = get_best(mg_lam_1h, ['alpha ', 'beta ', 'gamma ', 'n_neurons ', 'sparsity '])
-mg_lam_ssp_best = get_best(mg_lam_ssp, ['alpha ', 'beta ', 'gamma ', 'n_neurons ', 'sparsity ', 'dims '])
-mg_lam_grid_best = get_best(mg_lam_grid, ['alpha ', 'beta ', 'gamma ', 'n_neurons ', 'sparsity '])
+mg_lam_base_best = get_best(mg_lam_base, ['alpha ', 'beta ', 'gamma ', 'lambd '])
+mg_lam_1h_best = get_best(mg_lam_1h, ['alpha ', 'beta ', 'gamma ', 'lambd ', 'n_neurons ', 'sparsity '])
+mg_lam_ssp_best = get_best(mg_lam_ssp, ['alpha ', 'beta ', 'gamma ', 'lambd ', 'n_neurons ', 'sparsity ', 'dims '])
+mg_lam_grid_best = get_best(mg_lam_grid, ['alpha ', 'beta ', 'gamma ', 'lambd ', 'n_neurons ', 'sparsity '])
 
-param_sets_lam_base = mg_lam_base_best[['index', 'alpha ','beta ','gamma ', 'goal_reached']]
-param_sets_lam_1h = mg_lam_1h_best[['index', 'alpha ', 'beta ', 'gamma ', 'n_neurons ', 'sparsity ', 'goal_reached']]
-param_sets_lam_ssp = mg_lam_ssp_best[['index', 'alpha ', 'beta ', 'gamma ', 'n_neurons ', 'sparsity ', 'dims ', 'goal_reached']]
-param_sets_lam_grid = mg_lam_grid_best[['index', 'alpha ', 'beta ', 'gamma ', 'n_neurons ', 'sparsity ', 'goal_reached']]
+param_sets_lam_base = mg_lam_base_best[['index', 'alpha ','beta ','gamma ', 'lambd ', 'goal_reached']]
+param_sets_lam_1h = mg_lam_1h_best[['index', 'alpha ', 'beta ', 'gamma ', 'lambd ', 'n_neurons ', 'sparsity ', 'goal_reached']]
+param_sets_lam_ssp = mg_lam_ssp_best[['index', 'alpha ', 'beta ', 'gamma ', 'lambd ', 'n_neurons ', 'sparsity ', 'dims ', 'goal_reached']]
+param_sets_lam_grid = mg_lam_grid_best[['index', 'alpha ', 'beta ', 'gamma ', 'lambd ', 'n_neurons ', 'sparsity ', 'goal_reached']]
 
 
 
@@ -276,10 +276,10 @@ in_range_ssp = get_all_best_params(mg_0_ssp, param_sets_ssp, ['alpha ', 'beta ',
 in_range_grid = get_all_best_params(mg_0_grid, param_sets_grid, ['alpha ', 'beta ', 'gamma ', 'n_neurons ', 'sparsity '])
 
 ## TD(lambda)
-in_range_lam_base = get_all_best_params(mg_lam_base, param_sets_lam_base, ['alpha ', 'beta ', 'gamma '])
-in_range_lam_1h = get_all_best_params(mg_lam_1h, param_sets_lam_1h, ['alpha ', 'beta ', 'gamma ', 'n_neurons ', 'sparsity '])
-in_range_lam_ssp = get_all_best_params(mg_lam_ssp, param_sets_lam_ssp, ['alpha ', 'beta ', 'gamma ', 'n_neurons ', 'sparsity ', 'dims '])
-in_range_lam_grid = get_all_best_params(mg_lam_grid, param_sets_lam_grid, ['alpha ', 'beta ', 'gamma ', 'n_neurons ', 'sparsity '])
+in_range_lam_base = get_all_best_params(mg_lam_base, param_sets_lam_base, ['alpha ', 'beta ', 'gamma ', 'lambd '])
+in_range_lam_1h = get_all_best_params(mg_lam_1h, param_sets_lam_1h, ['alpha ', 'beta ', 'gamma ', 'lambd ', 'n_neurons ', 'sparsity '])
+in_range_lam_ssp = get_all_best_params(mg_lam_ssp, param_sets_lam_ssp, ['alpha ', 'beta ', 'gamma ', 'lambd ', 'n_neurons ', 'sparsity ', 'dims '])
+in_range_lam_grid = get_all_best_params(mg_lam_grid, param_sets_lam_grid, ['alpha ', 'beta ', 'gamma ', 'lambd ', 'n_neurons ', 'sparsity '])
 
 ## CREATE PLOTS ##
 print('Plotting optimization curves')
