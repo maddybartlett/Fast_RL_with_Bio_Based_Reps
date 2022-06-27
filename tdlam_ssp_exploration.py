@@ -9,6 +9,7 @@ sys.path.insert(0, './network')
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
+import seaborn as sns
 import plotly.express as px
 
 # Packages for saving and accessing files
@@ -38,40 +39,6 @@ def trials_to_goal(data, goal):
         
     ## return list 
     return goal_reached
-
-## function taken from seaborn for calculating confidence intervals
-## https://github.com/mwaskom/seaborn/blob/master/seaborn/utils.py
-def get_ci(a, which=95, axis=None):
-    """Return a percentile range from an array of values."""
-    p = 50 - which / 2, 50 + which / 2
-    return np.nanpercentile(a, p, axis)
-
-## Functions for converting confidence intervals to error bars
-def ci_to_errsize(cis, heights):
-    """Convert intervals to error arguments relative to plot heights.
-    Parameters
-    ----------
-    cis : 2 x n sequence
-        sequence of confidence interval limits
-    heights : n sequence
-        sequence of plot heights
-    Returns
-    -------
-    errsize : 2 x n array
-        sequence of error size relative to height values in correct
-        format as argument for plt.bar
-    """
-    cis = np.atleast_2d(cis).reshape(2, -1)
-    heights = np.atleast_1d(heights)
-    errsize = []
-    for i, (low, high) in enumerate(np.transpose(cis)):
-        h = heights[i]
-        elow = h - low
-        ehigh = high - h
-        errsize.append([elow, ehigh])
-
-    errsize = np.asarray(errsize).T
-    return errsize
 
 
 ## GET MAIN FIGURES FOR PAPER ##
@@ -154,28 +121,19 @@ dim_data = pd.DataFrame(columns = ['dims', 'goal_reached'])
 dim_data['dims'] = pd.concat([orig_data['dims'], dim512_data['dims'], dim1024_data['dims']], axis=0)
 dim_data['goal_reached'] = pd.concat([orig_data['goal_reached'], dim512_data['goal_reached'], dim1024_data['goal_reached']], axis=0)
 
-## Calculate means and error bars
-#get list of mean trials to goal for each dims experiment
-means = pd.DataFrame(dim_data.groupby(['dims'])['goal_reached'].mean())
-means_lst = list(means['goal_reached'])
-
-#get confidence intervals
-ci = [get_ci(dim_data[dim_data['dims'] == 256]['goal_reached'])]
-ci.append(get_ci(dim_data[dim_data['dims'] == 512]['goal_reached']))
-ci.append(get_ci(dim_data[dim_data['dims'] == 1024]['goal_reached']))
-
-#convert confidence intervals to errors
-errors = ci_to_errsize(ci, means_lst)
-
 ## Plot means and error bars
-print('Plotting means and error bars for dimensions exploration.')
+print('Plotting means and confidence intervals for dimensions exploration.')
 
-x_ticks = ['256', '512', '1024']
-plt.errorbar(x_ticks, means_lst, yerr=errors, elinewidth=3, color = 'black', marker = 'o', markersize = 7)
+_, axes = plt.subplots(1, 1, figsize=(5,2.5))
+ 
+sns.pointplot(x="dims", y="goal_reached", ci=95.0, data=dim_data, ax=axes, color='black')
 plt.xlabel('N Dimensions', fontsize = 14)
 plt.ylabel('N Trials to Goal', fontsize = 14)
-#plt.title('Mean Trials to Goal Rolling Mean Reward', fontsize = 16)
 plt.tick_params(labelsize = 12)
+plt.ylim(0,2000)
+
+## Save figure
+plt.savefig("./figures/SSPdims_means.pdf", bbox_inches="tight")
 
 ## Save figure
 print('Saving plot in: ' + folder + '/SSPdims_means.pdf')
@@ -225,30 +183,15 @@ neuron_data['n_neurons'] = pd.concat([orig_data['n_neurons'], n5000_data['n_neur
 neuron_data['goal_reached'] = pd.concat([orig_data['goal_reached'], n5000_data['goal_reached'], n6000_data['goal_reached'], n7000_data['goal_reached'], 
                                   n8000_data['goal_reached'], n9000_data['goal_reached'], n10000_data['goal_reached']], axis=0)
 
-## Calculate means and error bars
-#get list of mean trials to goal for each dims experiment
-means = pd.DataFrame(neuron_data.groupby(['n_neurons'])['goal_reached'].mean())
-means_lst = list(means['goal_reached'])
 
-#get confidence intervals
-ci = [get_ci(neuron_data[neuron_data['n_neurons'] == 4117]['goal_reached'])]
-ci.append(get_ci(neuron_data[neuron_data['n_neurons'] == 5000]['goal_reached']))
-ci.append(get_ci(neuron_data[neuron_data['n_neurons'] == 6000]['goal_reached']))
-ci.append(get_ci(neuron_data[neuron_data['n_neurons'] == 7000]['goal_reached']))
-ci.append(get_ci(neuron_data[neuron_data['n_neurons'] == 8000]['goal_reached']))
-ci.append(get_ci(neuron_data[neuron_data['n_neurons'] == 9000]['goal_reached']))
-ci.append(get_ci(neuron_data[neuron_data['n_neurons'] == 10000]['goal_reached']))
-
-#convert confidence intervals to errors
-errors = ci_to_errsize(ci, means_lst)
-
-## Plot means and error bars
-x_ticks = ['4117', '5000', '6000', '7000', '8000', '9000', '10000']
-plt.errorbar(x_ticks, means_lst, yerr=errors, elinewidth=3, color = 'black', marker = 'o', markersize = 7)
+## Plot means and confidence intervals
+_, axes = plt.subplots(1, 1, figsize=(5,2.5))
+ 
+sns.pointplot(x="n_neurons", y="goal_reached", ci=95.0, data=neuron_data, ax=axes, color='black')
 plt.xlabel('N Neurons', fontsize = 14)
 plt.ylabel('N Trials to Goal', fontsize = 14)
-#plt.title('Mean Trials to Goal Rolling Mean Reward', fontsize = 16)
 plt.tick_params(labelsize = 12)
+plt.ylim(0,2000)
 
 ## Save figure
 print('Saving plot in: ' + folder + '/SSPneurons_means.pdf')
