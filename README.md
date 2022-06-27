@@ -20,6 +20,7 @@ You will need to have Jupyter Notebook installed in order to run these scripts. 
 * Pandas
 * Pickle
 * Matplotlib
+* Seaborn
 * Plotly.express
 * Pathlib
 * Sys
