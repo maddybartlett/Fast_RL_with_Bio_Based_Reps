@@ -153,10 +153,11 @@ The final section in this notebook provides the combined plots presented in the 
 Please use this bibtex to reference the paper: 
 
 <pre>
-<!-- @inproceedings{bartlett2022_RLNNI,
+ @inproceedings{bartlett2022_RLNNI,
   author = {Bartlett, Madeleine and Stewart, Terrence C and Orchard, Jeff},
   title = {Fast Online Reinforcement Learning with Biologically-Based State Representations},
   year = {2022},
-  booktitle={},
- } -->
+  booktitle={In-Person MathPsych/ICCM 2022.},
+  url={mathpsych.org/presentation/838.}
+ }
 </pre>
